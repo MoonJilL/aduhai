@@ -81,6 +81,12 @@ body {
   filter: drop-shadow(6px 6px 0 #2b3040);
 }
 
+/* daisy checkboxes recolored to the palette */
+.checkbox-hotpink {
+  --chkbg: #f24567;
+  --chkfg: #faf9f6;
+}
+
 /* tactile press: lifts on hover, slams down on click */
 .sticker-press {
   transition:
