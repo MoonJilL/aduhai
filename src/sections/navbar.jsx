@@ -1,11 +1,18 @@
 import { Menu } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const LINKS = [
-  { label: "Home", href: "#home" },
-  { label: "About", href: "#about" },
-  { label: "Offer", href: "#offer" },
-  { label: "Contact", href: "#contact" },
+  { label: "Home", to: "/" },
+  { label: "About", to: "/#about" },
+  { label: "Offer", to: "/order" },
+  { label: "Contact", to: "/" },
 ];
+
+/* Blurs the focused element so the DaisyUI click-dropdown closes after a tap */
+function closeMenu() {
+  const active = document.activeElement;
+  if (active && active !== document.body) active.blur();
+}
 
 /* White abstract triangle + circle mark inside the navy square */
 function LogoMark() {
@@ -41,7 +48,7 @@ export default function Navbar() {
         />
 
         {/* logo: navy square + thin bordered wordmark box */}
-        <a href="#home" className="group flex items-center gap-2 sm:gap-3">
+        <Link to="/" className="group flex items-center gap-2 sm:gap-3">
           <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-ink transition-transform duration-200 group-hover:-rotate-6 sm:h-11 sm:w-11">
             <LogoMark />
           </span>
@@ -53,28 +60,36 @@ export default function Navbar() {
               Company&nbsp;Logo
             </span>
           </span>
-        </a>
+        </Link>
 
         {/* desktop links */}
-        <ul className="hidden items-center gap-5 md:flex lg:gap-7">
+        <ul className="hidden items-center gap-4 md:flex lg:gap-6">
           {LINKS.map((link) => (
             <li key={link.label}>
-              <a
-                href={link.href}
+              <Link
+                to={link.to}
                 className="text-sm font-bold text-ink transition-all duration-200 hover:-translate-y-0.5 hover:text-peach lg:text-base"
               >
                 {link.label}
-              </a>
+              </Link>
             </li>
           ))}
           <li className="h-2 w-2 rotate-45 bg-hotpink" aria-hidden="true" />
           <li>
-            <a
-              href="#contact"
-              className="text-sm font-bold text-ink underline decoration-hotpink decoration-4 underline-offset-4 transition-all duration-200 hover:-translate-y-0.5 hover:text-peach hover:decoration-peach lg:text-base"
+            <Link
+              to="/login"
+              className="rounded-full border-2 border-ink px-4 py-1.5 text-sm font-bold text-ink transition-colors duration-200 hover:bg-peach lg:text-base"
+            >
+              Login
+            </Link>
+          </li>
+          <li>
+            <Link
+              to="/signup"
+              className="rounded-full border-thick sticker-shadow sticker-press bg-peach px-4 py-1.5 font-display text-sm font-extrabold uppercase italic text-ink hover:bg-hotpink hover:text-cream"
             >
               Sign&nbsp;Up
-            </a>
+            </Link>
           </li>
         </ul>
 
@@ -94,15 +109,32 @@ export default function Navbar() {
           >
             {LINKS.map((link) => (
               <li key={link.label}>
-                <a href={link.href} className="rounded-lg hover:bg-peach hover:text-ink">
+                <Link
+                  to={link.to}
+                  onClick={closeMenu}
+                  className="rounded-lg hover:bg-peach hover:text-ink"
+                >
                   {link.label}
-                </a>
+                </Link>
               </li>
             ))}
             <li>
-              <a href="#contact" className="rounded-lg bg-hotpink text-cream hover:bg-hotpink">
+              <Link
+                to="/login"
+                onClick={closeMenu}
+                className="rounded-lg border-2 border-ink bg-cream hover:bg-peach hover:text-ink"
+              >
+                Login
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/signup"
+                onClick={closeMenu}
+                className="rounded-lg bg-hotpink text-cream hover:bg-hotpink hover:text-cream"
+              >
                 Sign Up
-              </a>
+              </Link>
             </li>
           </ul>
         </div>
