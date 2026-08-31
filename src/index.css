@@ -1,1 +1,176 @@
 @import "tailwindcss";
+@plugin "daisyui" {
+  themes: light --default;
+}
+
+/* ---------- design tokens (Tailwind v4 theme) ---------- */
+@theme {
+  --color-ink: #2b3040;
+  --color-lavender: #7d76c4;
+  --color-panel-indigo: #575da8;
+  --color-panel-teal: #85a4a2;
+  --color-peach: #f9b16e;
+  --color-salmon: #d88490;
+  --color-hotpink: #f24567;
+  --color-cream: #faf9f6;
+
+  --font-display: "Montserrat", "Poppins", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Poppins", "Montserrat", ui-sans-serif, system-ui, sans-serif;
+}
+
+/* ---------- base ---------- */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background-color: #7d76c4;
+  color: #2b3040;
+  font-family: "Poppins", "Montserrat", ui-sans-serif, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background-color: #f24567;
+  color: #faf9f6;
+}
+
+/* ---------- mandatory sticker / split classes ---------- */
+.border-thick {
+  border: 3px solid #2b3040;
+}
+
+.sticker-shadow {
+  box-shadow: 6px 6px 0 #2b3040;
+}
+
+.text-outline {
+  -webkit-text-stroke: 2.5px #2b3040;
+}
+
+.split-left {
+  clip-path: polygon(0 0, 62% 0, 45% 100%, 0 100%);
+}
+
+.split-right {
+  clip-path: polygon(62% 0, 100% 0, 100% 100%, 45% 100%);
+}
+
+/* thin ink diagonal sitting exactly on the split seam */
+.split-line {
+  clip-path: polygon(62% 0, 62.5% 0, 45.5% 100%, 45% 100%);
+}
+
+/* ---------- extra reusable classes (no arbitrary values allowed) ---------- */
+.card-shadow {
+  box-shadow: 0 30px 80px rgba(43, 48, 64, 0.42);
+}
+
+.border-top-thick {
+  border-top: 3px solid #2b3040;
+}
+
+.text-micro {
+  font-size: 8px;
+  letter-spacing: 0.32em;
+}
+
+/* flat hard shadow for SVG stickers (follows the star shape) */
+.sticker-shadow-svg {
+  filter: drop-shadow(6px 6px 0 #2b3040);
+}
+
+/* tactile press: lifts on hover, slams down on click */
+.sticker-press {
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease,
+    background-color 0.15s ease,
+    color 0.15s ease;
+}
+.sticker-press:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 8px 8px 0 #2b3040;
+}
+.sticker-press:active {
+  transform: translate(5px, 5px);
+  box-shadow: 1px 1px 0 #2b3040;
+}
+
+/* hero height: full screen on mobile, ~90vh on desktop */
+.hero-min {
+  min-height: 100vh;
+}
+@media (min-width: 1024px) {
+  .hero-min {
+    min-height: 90vh;
+  }
+}
+
+/* ---------- motion ---------- */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes floaty {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-14px);
+  }
+}
+
+@keyframes spin-slow {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.anim-rise {
+  animation: rise 0.7s cubic-bezier(0.2, 0.9, 0.3, 1.15) both;
+}
+.anim-float {
+  animation: floaty 5s ease-in-out infinite;
+}
+.anim-float-slow {
+  animation: floaty 8s ease-in-out infinite;
+}
+.anim-spin-slow {
+  animation: spin-slow 16s linear infinite;
+}
+.anim-marquee {
+  animation: marquee 26s linear infinite;
+}
+
+.ticker:hover .anim-marquee {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}
